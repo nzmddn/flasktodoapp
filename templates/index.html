@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>TodoApp</title>
+</head>
+<body>
+    <div style= "margin-top: 100px;"class="container">
+        <h3>Todo List</h3>
+        <hr>
+
+        <form action="/add" method = "post"> <!--forma başlık girdiğimiz zaman veritabanına veri ekleyeceğiz. Butona basılınca /add e post ile gidilecek. name i title olan alanı alıp veritabanına ekleyeceğiz.-->
+            <div class="form-group">
+                <label for="formGroupExampleInput">Todo Başlık</label>
+                <input type="text" class="form-control" name="title" id="formGroupExampleInput" placeholder="Todo giriniz..."><br> <!--name parametresi;formu submit ettiğimizde formumuzun name değerine göre başlığı almaya çalışacağız.-->
+                <button type = "submit" class = "btn btn-danger">Ekle</button>
+                <hr>
+            </div>
+        
+        </form>
+        {% if todos == [] %}
+        <div class="alert alert-warning" role="alert">
+                <strong>Uyarı!</strong> Herhangi bir veri bulunmuyor...
+              </div>
+        {% else %}
+        <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Todo Başlık</th>
+                    <th scope="col">Durum</th>
+                    <th scope="col">Durum Güncelle</th>
+                    <th scope="col">Todo Sil</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in todos  %}
+                    <tr>
+                            <th scope="row">{{i.id}}</th>
+                            <td>{{i.title}}</td>
+                            {% if i.complete == False %}
+                                <td>Tamamlanmadı</td>
+                            {% else %}
+                                <td>Tamamlandı</td>
+                            {% endif %}
+                            
+                            <td><a href="/complete/{{i.id}}" class = "btn btn-danger">Tamamla</a></td>
+                            <td><a href="/delete/{{i.id}}" class = "btn btn-warning">Sil</a></td>
+                          </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
